@@ -1,3 +1,11 @@
+let isGithubWindowOpen = false;
+let isTemplateWindowOpen = false;
+
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+    window.location.href = 'https://www.google.com';
+
+}
+
 function makeDraggable(element) {
     const header = element.querySelector('.header');
     header.onmousedown = function(event) {
@@ -27,12 +35,12 @@ function makeDraggable(element) {
     };
 }
 
-function openNewWindow() {
-    const userHtml = prompt("Enter HTML content for the new window:");
-    if (!userHtml) return;
-
+function openGithub() {
+    if (isGithubWindowOpen) return;
+    
     const newWindow = document.createElement('div');
     newWindow.className = 'draggable';
+    newWindow.id = 'github-window';
     newWindow.innerHTML = `
         <div class="header">
             <button class="WindowButton" onclick="closeWindow(this)">
@@ -40,11 +48,13 @@ function openNewWindow() {
             </button>
         </div>
         <div class="content">
-            ${userHtml}
+            <div class="calendar"></div>
         </div>
     `;
     document.body.appendChild(newWindow);
     makeDraggable(newWindow);
+    new GitHubCalendar(".calendar", "SliverGithub");
+    isGithubWindowOpen = true;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -55,6 +65,33 @@ document.addEventListener('DOMContentLoaded', () => {
 function closeWindow(button) {
     const windowToClose = button.closest('.draggable');
     if (windowToClose) {
+        if (windowToClose.id === 'github-window') {
+            isGithubWindowOpen = false;
+        }
+        if (windowToClose.id === 'steam-window') {
+            isSteamWindowOpen = false;
+        }
         windowToClose.remove();
     }
+}
+
+function openTemplate() {
+    if (isTemplateWindowOpen) return;
+    
+    const newWindow = document.createElement('div');
+    newWindow.className = 'draggable';
+    newWindow.id = 'template-window';
+    newWindow.innerHTML = `
+        <div class="header">
+            <button class="WindowButton" onclick="closeWindow(this)">
+                <i class="fa-solid fa-x" style="color:red;"></i>
+            </button>
+        </div>
+        <div class="content">
+            insert content here
+        </div>
+    `;
+    document.body.appendChild(newWindow);
+    makeDraggable(newWindow);
+    isTemplateWindowOpen = true;
 }
