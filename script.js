@@ -1,12 +1,20 @@
-let isGithubWindowOpen = false;
 let isTemplateWindowOpen = false;
 
 function makeDraggable(element) {
     const header = element.querySelector('.header');
-    header.onmousedown = function(event) {
-        if (event.target.closest('.WindowButton')) return;
-        event.preventDefault();
-        
+    let isDragging = false;
+    
+    // Mouse Events
+    header.onmousedown = handleDragStart;
+    // Touch Events
+    header.ontouchstart = handleDragStart;
+
+    function handleDragStart(e) {
+        if (e.target.closest('.WindowButton')) return;
+        e.preventDefault();
+        isDragging = true;
+
+        const event = e.type === 'mousedown' ? e : e.touches[0];
         const rect = element.getBoundingClientRect();
         const shiftX = event.clientX - rect.left;
         const shiftY = event.clientY - rect.top;
@@ -23,33 +31,20 @@ function makeDraggable(element) {
         }
 
         document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('touchmove', onMouseMove);
         document.onmouseup = () => {
             document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('touchmove', onMouseMove);
             document.onmouseup = null;
+            isDragging = false;
         };
-    };
-}
-
-function openGithub() {
-    if (isGithubWindowOpen) return;
-    
-    const newWindow = document.createElement('div');
-    newWindow.className = 'draggable';
-    newWindow.id = 'github-window';
-    newWindow.innerHTML = `
-        <div class="header">
-            <button class="WindowButton" onclick="closeWindow(this)">
-                <i class="fa-solid fa-x" style="color:red;"></i>
-            </button>
-        </div>
-        <div class="content">
-            <div class="calendar"></div>
-        </div>
-    `;
-    document.body.appendChild(newWindow);
-    makeDraggable(newWindow);
-    new GitHubCalendar(".calendar", "SliverGithub");
-    isGithubWindowOpen = true;
+        document.ontouchend = () => {
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('touchmove', onMouseMove);
+            document.ontouchend = null;
+            isDragging = false;
+        };
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

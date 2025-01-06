@@ -1,17 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Device Redirect</title>
-</head>
-<body>
-    <script>
-        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
-            window.location.href = 'https://page-six-coral.vercel.app/mobile/languageSelection.html'
-        } else {
-            window.location.href = 'https://page-six-coral.vercel.app/pc/languageSelection.html'
-        }
-    </script>
-</body>
+<html>
+    <head>
+        <title>Select the language</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                background-color: #f0f0f0;
+                font-family: Arial, sans-serif;
+                text-align: center;
+            }
+
+            button {
+                background-color: #333;
+                border: none;
+                color: white;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+                border-radius: 25px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Select the language</h1>
+        <h2>Wybież język</h2>
+        <button onclick="window.location.href = 'https://page-six-coral.vercel.app/eng'">English</button>
+        <button onclick="window.location.href = 'https://page-six-coral.vercel.app/pl'">Polski</button>
+    </body>
 </html>
