@@ -2,7 +2,7 @@ let isGithubWindowOpen = false;
 let isTemplateWindowOpen = false;
 
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
-    window.location.href = 'https://page-six-coral.vercel.app/mobile';
+    window.location.href = 'https://page-six-coral.vercel.app/mobile/eng';
 
 }
 
