@@ -55,11 +55,10 @@ document.addEventListener('DOMContentLoaded', () => {
 function closeWindow(button) {
     const windowToClose = button.closest('.draggable');
     if (windowToClose) {
-        if (windowToClose.id === 'github-window') {
-            isGithubWindowOpen = false;
-        }
-        if (windowToClose.id === 'steam-window') {
-            isSteamWindowOpen = false;
+        if (windowToClose.id === 'template-window') {
+            isTemplateWindowOpen = false;
+            // Remove active indicator from button
+            document.querySelector('[onclick="openTemplate()"]').classList.remove('active');
         }
         windowToClose.remove();
     }
@@ -68,13 +67,15 @@ function closeWindow(button) {
 function openTemplate() {
     if (isTemplateWindowOpen) return;
     
+    // Add active indicator to button
+    document.querySelector('[onclick="openTemplate()"]').classList.add('active');
+    
     const newWindow = document.createElement('div');
     newWindow.className = 'draggable';
     newWindow.id = 'template-window';
     newWindow.innerHTML = `
         <div class="header">
             <button class="WindowButton" onclick="closeWindow(this)">
-                <i class="fa-solid fa-x" style="color:red;"></i>
             </button>
         </div>
         <div class="content">

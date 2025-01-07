@@ -9,6 +9,8 @@ body {
     position: absolute;
     background-color: #f9f9f9;
     border-radius: 25px;
+    resize: none;
+    user-select: none;
 }
 
 .header {
@@ -41,16 +43,33 @@ body {
     width: 50px;  /* Set fixed width */
     height: 50px; /* Set fixed height */
     margin: 5px;  /* Add spacing between buttons */
+    position: relative;
 }
 
-button:hover {
-    background-color: #1f47b6;
+.button.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 2px;
+    background-color: #007AFF;
+    border-radius: 1px;
 }
 
 .WindowButton {
-    background-color: transparent;
+    background-color: red;
     border: none;
     padding-right: 6px;
     padding-top: 2px;
     cursor: pointer; /* Makes the button clickable */
+    aspect-ratio: 1;
+    border-radius: 50%;
+    width: 10px;
+
+}
+
+#container {
+    overflow: hidden;
 }

@@ -8,6 +8,30 @@
     <link rel="stylesheet" href="https://cdn.rawgit.com/IonicaBizau/github-calendar/gh-pages/dist/github-calendar.css"/>
     <script src="script.js"></script>
     <script src="https://kit.fontawesome.com/6f7470e25f.js" crossorigin="anonymous"></script>
+    <style>
+        .dock {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .button {
+            transform: scale(1);
+            transition: transform 0.2s;
+        }
+        
+        .button:hover {
+            transform: scale(1.2);
+        }
+    </style>
 </head>
 
 <body>
@@ -15,7 +39,6 @@
         <div class="draggable">
             <div class="header">
                 <button class="WindowButton" onclick="closeWindow(this)">
-                    <i class="fa-solid fa-x" style="color:red;"></i>
                 </button>
             </div>
             <div class="content">
@@ -25,6 +48,10 @@
         </div>
     </div>
 
-    <button class="button" onclick="openTemplate()"><i class="fa-brands fa-square-steam"></i></button>
+    <div class="dock">
+        <button class="button" onclick="openTemplate()">
+            <i class="fa-brands fa-square-steam"></i>
+        </button>
+    </div>
 </body>
 </html>
