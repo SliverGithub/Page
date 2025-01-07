@@ -1,4 +1,5 @@
 let isTemplateWindowOpen = false;
+let isAboutMeOpen = false;
 
 function makeDraggable(element) {
     const header = element.querySelector('.header');
@@ -60,6 +61,11 @@ function closeWindow(button) {
             // Remove active indicator from button
             document.querySelector('[onclick="openTemplate()"]').classList.remove('active');
         }
+        if (windowToClose.id === 'aboutme-window') {
+            isAboutMeOpen = false;
+            // Remove active indicator from button
+            document.querySelector('[onclick="openAboutMe()"]').classList.remove('active');
+        }
         windowToClose.remove();
     }
 }
@@ -79,7 +85,30 @@ function openTemplate() {
             </button>
         </div>
         <div class="content">
-            insert content here
+            Tutaj wstaw treść
+        </div>
+    `;
+    document.body.appendChild(newWindow);
+    makeDraggable(newWindow);
+    isTemplateWindowOpen = true;
+}
+
+function openAboutMe() {
+    if (isAboutMeOpen) return;
+    
+    // Add active indicator to button
+    document.querySelector('[onclick="openAboutMe()"]').classList.add('active');
+    
+    const newWindow = document.createElement('div');
+    newWindow.className = 'draggable';
+    newWindow.id = 'aboutme-window';
+    newWindow.innerHTML = `
+        <div class="header">
+            <button class="WindowButton" onclick="closeWindow(this)">
+            </button>
+        </div>
+        <div class="content">
+            Tutaj wstaw treść
         </div>
     `;
     document.body.appendChild(newWindow);
