@@ -113,5 +113,5 @@ function openAboutMe() {
     `;
     document.body.appendChild(newWindow);
     makeDraggable(newWindow);
-    isTemplateWindowOpen = true;
+    isAboutMeWindowOpen = true;
 }
