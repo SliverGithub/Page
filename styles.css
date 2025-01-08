@@ -22,6 +22,7 @@ body {
     border-top-right-radius: 25px;
     display: flex;
     justify-content: flex-end; /* Aligns the button to the right */
+    gap: 5px;  /* Add spacing between buttons */
 }
 
 .content {
@@ -72,6 +73,11 @@ body {
 
 }
 
+.WindowButton.resize {
+    background-color: #4CAF50;
+    margin-right: 5px;
+}
+
 #container {
     overflow: hidden;
 }
@@ -92,4 +98,8 @@ body {
     display: flex;
     gap: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dock.hidden {
+    display: none;
 }

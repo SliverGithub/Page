@@ -4,13 +4,9 @@ let isAboutMeOpen = false;
 function makeDraggable(element) {
     const header = element.querySelector('.header');
     let isDragging = false;
-    
-    // Mouse Events
-    header.onmousedown = handleDragStart;
-    // Touch Events
-    header.ontouchstart = handleDragStart;
 
     function handleDragStart(e) {
+        if (element.classList.contains('maximized')) return; // Prevent dragging if maximized
         if (e.target.closest('.WindowButton')) return;
         e.preventDefault();
         isDragging = true;
@@ -20,32 +16,41 @@ function makeDraggable(element) {
         const shiftX = event.clientX - rect.left;
         const shiftY = event.clientY - rect.top;
 
-        element.style.position = 'absolute';
-        
-        function moveAt(pageX, pageY) {
-            element.style.left = pageX - shiftX + 'px';
-            element.style.top = pageY - shiftY + 'px';
+        function moveAt(clientX, clientY) {
+            let newX = clientX - shiftX;
+            let newY = clientY - shiftY;
+
+            const maxX = window.innerWidth - element.offsetWidth;
+            const maxY = window.innerHeight - element.offsetHeight;
+
+            newX = Math.min(Math.max(0, newX), maxX);
+            newY = Math.min(Math.max(0, newY), maxY);
+
+            element.style.left = `${newX}px`;
+            element.style.top = `${newY}px`;
         }
 
-        function onMouseMove(event) {
-            moveAt(event.pageX, event.pageY);
+        function onMove(e) {
+            if (!isDragging) return;
+            const pos = e.type.includes('mouse') ? e : e.touches[0];
+            moveAt(pos.clientX, pos.clientY);
         }
 
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('touchmove', onMouseMove);
-        document.onmouseup = () => {
-            document.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('touchmove', onMouseMove);
-            document.onmouseup = null;
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('touchmove', onMove, { passive: false });
+
+        function stopDragging() {
             isDragging = false;
-        };
-        document.ontouchend = () => {
-            document.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('touchmove', onMouseMove);
-            document.ontouchend = null;
-            isDragging = false;
-        };
+            document.removeEventListener('mousemove', onMove);
+            document.removeEventListener('touchmove', onMove);
+        }
+
+        document.addEventListener('mouseup', stopDragging, { once: true });
+        document.addEventListener('touchend', stopDragging, { once: true });
     }
+
+    header.addEventListener('mousedown', handleDragStart);
+    header.addEventListener('touchstart', handleDragStart);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -114,4 +119,24 @@ function openAboutMe() {
     document.body.appendChild(newWindow);
     makeDraggable(newWindow);
     isAboutMeWindowOpen = true;
+}
+
+function toggleResize(button) {
+    const window = button.closest('.draggable');
+    const dock = document.querySelector('.dock');
+    if (window.classList.contains('maximized')) {
+        window.style.width = '';
+        window.style.height = '';
+        window.style.top = '';
+        window.style.left = '';
+        window.classList.remove('maximized');
+        dock.classList.remove('hidden');
+    } else {
+        window.style.width = '100vw';
+        window.style.height = '100vh';
+        window.style.top = '0';
+        window.style.left = '0';
+        window.classList.add('maximized');
+        dock.classList.add('hidden');
+    }
 }
