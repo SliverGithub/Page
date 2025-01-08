@@ -120,7 +120,7 @@ function openTemplate() {
             <button class="WindowButton" onclick="closeWindow(this)">
         </div>
         <div class="content">
-            Tutaj wstaw treść
+            Insert content here
         </div>
     `;
     document.body.appendChild(newWindow);
@@ -146,7 +146,7 @@ function openAboutMe() {
             <button class="WindowButton" onclick="closeWindow(this)">
         </div>
         <div class="content">
-            Tutaj wstaw treść
+            Insert content here
         </div>
     `;
     document.body.appendChild(newWindow);
