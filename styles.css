@@ -64,7 +64,7 @@ body {
 .WindowButton {
     background-color: red;
     border: none;
-    padding-right: 6px;
+    padding-left: 6px;
     padding-top: 2px;
     cursor: pointer; /* Makes the button clickable */
     aspect-ratio: 1;
@@ -75,6 +75,11 @@ body {
 
 .WindowButton.resize {
     background-color: #4CAF50;
+    margin-right: 5px;
+}
+
+.WindowButton.minimize {
+    background-color: #e0ca04;
     margin-right: 5px;
 }
 
@@ -98,8 +103,16 @@ body {
     display: flex;
     gap: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    z-index: 2147483647; /* Maximum z-index value */
 }
 
 .dock.hidden {
     display: none;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ccc;
+    padding: 0px;
 }

@@ -1,5 +1,7 @@
 let isTemplateWindowOpen = false;
 let isAboutMeOpen = false;
+let minimizedWindows = {};
+let zIndexCounter = 1;
 
 function makeDraggable(element) {
     const header = element.querySelector('.header');
@@ -51,6 +53,12 @@ function makeDraggable(element) {
 
     header.addEventListener('mousedown', handleDragStart);
     header.addEventListener('touchstart', handleDragStart);
+
+    element.addEventListener('mousedown', () => bringToFront(element));
+}
+
+function bringToFront(element) {
+    element.style.zIndex = ++zIndexCounter;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -60,34 +68,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function closeWindow(button) {
     const windowToClose = button.closest('.draggable');
+    const dock = document.querySelector('.dock');
     if (windowToClose) {
+        if (windowToClose.classList.contains('maximized')) {
+            dock.classList.remove('hidden');
+        }
         if (windowToClose.id === 'template-window') {
             isTemplateWindowOpen = false;
-            // Remove active indicator from button
             document.querySelector('[onclick="openTemplate()"]').classList.remove('active');
         }
         if (windowToClose.id === 'aboutme-window') {
             isAboutMeOpen = false;
-            // Remove active indicator from button
             document.querySelector('[onclick="openAboutMe()"]').classList.remove('active');
         }
         windowToClose.remove();
     }
 }
 
+function minimizeWindow(button) {
+    const windowToMinimize = button.closest('.draggable');
+    if (windowToMinimize) {
+        windowToMinimize.style.display = 'none';
+        minimizedWindows[windowToMinimize.id] = windowToMinimize;
+    }
+}
+
+function restoreWindow(windowId) {
+    const windowToRestore = minimizedWindows[windowId];
+    if (windowToRestore) {
+        windowToRestore.style.display = 'block';
+        bringToFront(windowToRestore);
+        delete minimizedWindows[windowId];
+    }
+}
+
 function openTemplate() {
-    if (isTemplateWindowOpen) return;
-    
-    // Add active indicator to button
+    if (isTemplateWindowOpen) {
+        restoreWindow('template-window');
+        return;
+    }
+
     document.querySelector('[onclick="openTemplate()"]').classList.add('active');
-    
+
     const newWindow = document.createElement('div');
     newWindow.className = 'draggable';
     newWindow.id = 'template-window';
     newWindow.innerHTML = `
         <div class="header">
+            <button class="WindowButton resize" onclick="toggleResize(this)">
+            <button class="WindowButton minimize" onclick="minimizeWindow(this)">
             <button class="WindowButton" onclick="closeWindow(this)">
-            </button>
         </div>
         <div class="content">
             Tutaj wstaw treść
@@ -99,18 +129,21 @@ function openTemplate() {
 }
 
 function openAboutMe() {
-    if (isAboutMeOpen) return;
-    
-    // Add active indicator to button
+    if (isAboutMeOpen) {
+        restoreWindow('aboutme-window');
+        return;
+    }
+
     document.querySelector('[onclick="openAboutMe()"]').classList.add('active');
-    
+
     const newWindow = document.createElement('div');
     newWindow.className = 'draggable';
     newWindow.id = 'aboutme-window';
     newWindow.innerHTML = `
         <div class="header">
+            <button class="WindowButton resize" onclick="toggleResize(this)">
+            <button class="WindowButton minimize" onclick="minimizeWindow(this)">
             <button class="WindowButton" onclick="closeWindow(this)">
-            </button>
         </div>
         <div class="content">
             Tutaj wstaw treść
