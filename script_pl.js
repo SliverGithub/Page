@@ -87,7 +87,11 @@ function closeWindow(button) {
 
 function minimizeWindow(button) {
     const windowToMinimize = button.closest('.draggable');
+    const dock = document.querySelector('.dock');
     if (windowToMinimize) {
+        if (windowToMinimize.classList.contains('maximized')) {
+            dock.classList.remove('hidden');
+        }
         windowToMinimize.style.display = 'none';
         minimizedWindows[windowToMinimize.id] = windowToMinimize;
     }
@@ -115,8 +119,8 @@ function openTemplate() {
     newWindow.id = 'template-window';
     newWindow.innerHTML = `
         <div class="header">
-            <button class="WindowButton resize" onclick="toggleResize(this)">
-            <button class="WindowButton minimize" onclick="minimizeWindow(this)">
+            <button class="WindowButton" onclick="minimizeWindow(this)">
+            <button class="WindowButton" onclick="toggleResize(this)">
             <button class="WindowButton" onclick="closeWindow(this)">
         </div>
         <div class="content">
@@ -125,6 +129,7 @@ function openTemplate() {
     `;
     document.body.appendChild(newWindow);
     makeDraggable(newWindow);
+    bringToFront(newWindow);
     isTemplateWindowOpen = true;
 }
 
@@ -141,9 +146,9 @@ function openAboutMe() {
     newWindow.id = 'aboutme-window';
     newWindow.innerHTML = `
         <div class="header">
-            <button class="WindowButton resize" onclick="toggleResize(this)">
-            <button class="WindowButton minimize" onclick="minimizeWindow(this)">
-            <button class="WindowButton" onclick="closeWindow(this)">
+            <button class="WindowButton" onclick="minimizeWindow(this)">
+            <button class="WindowButton" onclick="toggleResize(this)">
+            <button class="WindowButton" onclick="closeWindow(this)">>
         </div>
         <div class="content">
             Tutaj wstaw treść
@@ -151,6 +156,7 @@ function openAboutMe() {
     `;
     document.body.appendChild(newWindow);
     makeDraggable(newWindow);
+    bringToFront(newWindow);
     isAboutMeWindowOpen = true;
 }
 
