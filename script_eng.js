@@ -71,7 +71,6 @@ function closeWindow(button) {
     const dock = document.querySelector('.dock');
     if (windowToClose) {
         if (windowToClose.classList.contains('maximized')) {
-			toggleResize(button);
             dock.classList.remove('hidden');
         }
         if (windowToClose.id === 'template-window') {
@@ -88,7 +87,16 @@ function closeWindow(button) {
 
 function minimizeWindow(button) {
     const windowToMinimize = button.closest('.draggable');
+    const dock = document.querySelector('.dock');
     if (windowToMinimize) {
+        if (windowToMinimize.classList.contains('maximized')) {
+            dock.classList.remove('hidden');
+            windowToMinimize.classList.remove('maximized');
+            windowToMinimize.style.width = '';
+            windowToMinimize.style.height = '';
+            windowToMinimize.style.top = '';
+            windowToMinimize.style.left = '';
+        }
         windowToMinimize.style.display = 'none';
         minimizedWindows[windowToMinimize.id] = windowToMinimize;
     }
@@ -116,8 +124,8 @@ function openTemplate() {
     newWindow.id = 'template-window';
     newWindow.innerHTML = `
         <div class="header">
-            <button class="WindowButton resize" onclick="toggleResize(this)">
-            <button class="WindowButton minimize" onclick="minimizeWindow(this)">
+            <button class="WindowButton" onclick="minimizeWindow(this)">
+            <button class="WindowButton" onclick="toggleResize(this)">
             <button class="WindowButton" onclick="closeWindow(this)">
         </div>
         <div class="content">
@@ -126,6 +134,7 @@ function openTemplate() {
     `;
     document.body.appendChild(newWindow);
     makeDraggable(newWindow);
+    bringToFront(newWindow);
     isTemplateWindowOpen = true;
 }
 
@@ -152,6 +161,7 @@ function openAboutMe() {
     `;
     document.body.appendChild(newWindow);
     makeDraggable(newWindow);
+    bringToFront(newWindow);
     isAboutMeWindowOpen = true;
 }
 
