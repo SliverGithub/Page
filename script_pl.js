@@ -90,6 +90,11 @@ function minimizeWindow(button) {
     const dock = document.querySelector('.dock');
     if (windowToMinimize) {
         if (windowToMinimize.classList.contains('maximized')) {
+            windowToMinimize.classList.remove('maximized');
+            windowToMinimize.style.width = '';
+            windowToMinimize.style.height = '';
+            windowToMinimize.style.top = '';
+            windowToMinimize.style.left = '';
             dock.classList.remove('hidden');
         }
         windowToMinimize.style.display = 'none';
