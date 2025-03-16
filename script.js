@@ -138,17 +138,17 @@ function openTemplate() {
     isTemplateWindowOpen = true;
 }
 
-function openAboutMe() {
-    if (isAboutMeOpen) {
-        restoreWindow('aboutme-window');
+function openPython() {
+    if (isPythonOpen) {
+        restoreWindow('python-window');
         return;
     }
 
-    document.querySelector('[onclick="openAboutMe()"]').classList.add('active');
+    document.querySelector('[onclick="openPython()"]').classList.add('active');
 
     const newWindow = document.createElement('div');
     newWindow.className = 'draggable';
-    newWindow.id = 'aboutme-window';
+    newWindow.id = 'python-window';
     newWindow.innerHTML = `
         <div class="header">
             <button class="WindowButton resize" onclick="toggleResize(this)">
@@ -162,7 +162,7 @@ function openAboutMe() {
     document.body.appendChild(newWindow);
     makeDraggable(newWindow);
     bringToFront(newWindow);
-    isAboutMeWindowOpen = true;
+    isPythonWindowOpen = true;
 }
 
 function toggleResize(button) {
