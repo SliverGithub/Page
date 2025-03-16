@@ -124,12 +124,12 @@ function openTemplate() {
     newWindow.id = 'template-window';
     newWindow.innerHTML = `
         <div class="header">
-            <button class="WindowButton" onclick="minimizeWindow(this)">
-            <button class="WindowButton" onclick="toggleResize(this)">
+            <button class="WindowButton resize" onclick="toggleResize(this)">
+            <button class="WindowButton minimize" onclick="minimizeWindow(this)">
             <button class="WindowButton" onclick="closeWindow(this)">
         </div>
         <div class="content">
-            Tutaj wstaw treść
+            Insert content here
         </div>
     `;
     document.body.appendChild(newWindow);
@@ -151,12 +151,12 @@ function openAboutMe() {
     newWindow.id = 'aboutme-window';
     newWindow.innerHTML = `
         <div class="header">
-            <button class="WindowButton" onclick="minimizeWindow(this)">
-            <button class="WindowButton" onclick="toggleResize(this)">
-            <button class="WindowButton" onclick="closeWindow(this)">>
+            <button class="WindowButton resize" onclick="toggleResize(this)">
+            <button class="WindowButton minimize" onclick="minimizeWindow(this)">
+            <button class="WindowButton" onclick="closeWindow(this)">
         </div>
         <div class="content">
-            Tutaj wstaw treść
+            Insert content here
         </div>
     `;
     document.body.appendChild(newWindow);
