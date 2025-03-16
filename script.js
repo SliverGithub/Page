@@ -156,7 +156,7 @@ function openPython() {
             <button class="WindowButton" onclick="closeWindow(this)">
         </div>
         <div class="content">
-            Insert content here
+            <iframe src="https://trinket.io/embed/python/daea98fc8a6d?toggleCode=true" width="100%" height="356" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
         </div>
     `;
     document.body.appendChild(newWindow);
