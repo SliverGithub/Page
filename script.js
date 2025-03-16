@@ -1,5 +1,6 @@
 let isTemplateWindowOpen = false;
 let isAboutMeOpen = false;
+let isPythonOpen = false;
 let minimizedWindows = {};
 let zIndexCounter = 1;
 
@@ -124,9 +125,9 @@ function openTemplate() {
     newWindow.id = 'template-window';
     newWindow.innerHTML = `
         <div class="header">
-            <button class="WindowButton resize" onclick="toggleResize(this)">
-            <button class="WindowButton minimize" onclick="minimizeWindow(this)">
-            <button class="WindowButton" onclick="closeWindow(this)">
+            <button class="WindowButton resize" onclick="toggleResize(this)"></button>
+            <button class="WindowButton minimize" onclick="minimizeWindow(this)"></button>
+            <button class="WindowButton" onclick="closeWindow(this)"></button>
         </div>
         <div class="content">
             Insert content here
@@ -139,7 +140,9 @@ function openTemplate() {
 }
 
 function openPython() {
+    console.log("openPython function called");
     if (isPythonOpen) {
+        console.log("Python window is already open");
         restoreWindow('python-window');
         return;
     }
@@ -151,18 +154,18 @@ function openPython() {
     newWindow.id = 'python-window';
     newWindow.innerHTML = `
         <div class="header">
-            <button class="WindowButton resize" onclick="toggleResize(this)">
-            <button class="WindowButton minimize" onclick="minimizeWindow(this)">
-            <button class="WindowButton" onclick="closeWindow(this)">
+            <button class="WindowButton minimize" onclick="minimizeWindow(this)"></button>
+            <button class="WindowButton" onclick="closeWindow(this)"></button>
         </div>
         <div class="content">
-            <iframe src="https://trinket.io/embed/python/daea98fc8a6d?toggleCode=true" width="100%" height="356" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
+            <iframe src="https://trinket.io/embed/python/daea98fc8a6d" width="2500" height="1000" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
         </div>
     `;
     document.body.appendChild(newWindow);
     makeDraggable(newWindow);
     bringToFront(newWindow);
-    isPythonWindowOpen = true;
+    isPythonOpen = true;
+    console.log("Python window opened");
 }
 
 function toggleResize(button) {
